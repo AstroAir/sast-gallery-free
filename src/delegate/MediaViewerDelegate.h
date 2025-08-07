@@ -37,7 +37,7 @@ public slots:
     void deleteImage();
     void prevImage();
     void nextImage();
-    void rotateImage();
+    // void rotateImage(); // Image rotation function removed
     void openInFileExplorer();
 
 private:
@@ -50,6 +50,6 @@ private:
 
     bool loadImage(const QString& path, bool fadeAnimation = true);
     bool loadImage(const QImage& image, bool fadeAnimation = true);
-    void scaleTo(int percent);
+    // void scaleTo(int percent); // Image scaling function removed
     [[nodiscard]] int getScale() const;
 };

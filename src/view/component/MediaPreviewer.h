@@ -45,7 +45,7 @@ private:
     QPixmap originalPixmap;
 
     void initMedia();
-    static QPixmap roundedPixmap(const QPixmap& original, double radius);
+    // static QPixmap roundedPixmap(const QPixmap& original, double radius); // Removed image editing function
     QPixmap loadImage();
 
     void enterEvent(QEnterEvent* event) override;
@@ -54,8 +54,7 @@ private:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseDoubleClickEvent(QMouseEvent* event) override;
 
-    // scale the content while keeping the geometry for layout stability
-    QPixmap scalePixmapContent(qreal scaleFactor);
+    // QPixmap scalePixmapContent(qreal scaleFactor); // Image scaling function removed
 
-    void scaleAnimation(qreal startScale, qreal endScale, int duration = 200);
+    // void scaleAnimation(qreal startScale, qreal endScale, int duration = 200); // Animation removed
 };

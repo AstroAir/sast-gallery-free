@@ -7,5 +7,5 @@
 struct Tools {
     Tools() = delete;
     static QString fileSizeString(QString filepath);
-    static int imageBitDepth(const QImage& image);
+    // static int imageBitDepth(const QImage& image); // Image analysis function removed
 };

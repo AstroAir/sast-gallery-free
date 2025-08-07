@@ -73,18 +73,7 @@ void MediaPreviewer::initMedia() {
     requireReloadImage = true;
 }
 
-QPixmap MediaPreviewer::roundedPixmap(const QPixmap& original, double radius) {
-    QPixmap target = QPixmap(original.size());
-    target.fill(Qt::transparent);
-    QPainter painter(&target);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
-    QPainterPath path = QPainterPath();
-    path.addRoundedRect(target.rect(), radius, radius);
-    painter.setClipPath(path);
-    painter.drawPixmap(0, 0, original);
-    return target;
-}
+// Rounded pixmap function removed to eliminate image editing functionality
 
 void MediaPreviewer::loadImageComplete() {
     originalPixmap = imageLoadWatcher.result();
@@ -92,9 +81,9 @@ void MediaPreviewer::loadImageComplete() {
 }
 
 QPixmap MediaPreviewer::loadImage() {
+    // Image scaling during load removed to eliminate image editing functionality
     QImageReader reader(filepath);
-    reader.setScaledSize(QSize{0, 180});
-    return roundedPixmap(QPixmap::fromImage(reader.read()), 4);
+    return QPixmap::fromImage(reader.read());
 }
 
 void MediaPreviewer::enterEvent(QEnterEvent* event) {
@@ -109,12 +98,12 @@ void MediaPreviewer::leaveEvent(QEvent* event) {
 
 void MediaPreviewer::mousePressEvent(QMouseEvent* event) {
     QLabel::mousePressEvent(event);
-    scaleAnimation(1.0, 0.95);
+    // scaleAnimation(1.0, 0.95); // Animation removed
 }
 
 void MediaPreviewer::mouseReleaseEvent(QMouseEvent* event) {
     QLabel::mouseReleaseEvent(event);
-    scaleAnimation(0.95, 1.0);
+    // scaleAnimation(0.95, 1.0); // Animation removed
 }
 
 void MediaPreviewer::mouseDoubleClickEvent(QMouseEvent* event) {
@@ -122,33 +111,6 @@ void MediaPreviewer::mouseDoubleClickEvent(QMouseEvent* event) {
     emit doubleClicked();
 }
 
-QPixmap MediaPreviewer::scalePixmapContent(qreal scaleFactor) {
-    QSize originalSize = originalPixmap.size();
-    QSize scaledSize = originalSize * scaleFactor;
-    QPixmap target(originalPixmap.size());
-    target.fill(Qt::transparent);
+// Image scaling function removed to eliminate image editing functionality
 
-    QPainter painter(&target);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
-
-    painter.drawPixmap((originalSize.width() - scaledSize.width()) / 2,
-                       (originalSize.height() - scaledSize.height()) / 2,
-                       originalPixmap.scaled(scaledSize,
-                                             Qt::KeepAspectRatio,
-                                             Qt::SmoothTransformation));
-    return target;
-}
-
-void MediaPreviewer::scaleAnimation(qreal startScale, qreal endScale, int duration) {
-    auto* animation = new QPropertyAnimation(this, "scaleFactor");
-    animation->setDuration(duration);
-    animation->setStartValue(startScale);
-    animation->setEndValue(endScale);
-    connect(animation, &QPropertyAnimation::valueChanged, this, [=, this]() {
-        if (!originalPixmap.isNull()) {
-            setPixmap(scalePixmapContent(animation->currentValue().toReal()));
-        }
-    });
-    animation->start(QAbstractAnimation::DeleteWhenStopped);
-}
+// Scale animation function removed to eliminate image editing functionality

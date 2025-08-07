@@ -75,7 +75,7 @@ void MediaViewerDelegate::initConnections() {
             this,
             &MediaViewerDelegate::openInFileExplorer);
 
-    connect(view->rotateAction, &QAction::triggered, this, &MediaViewerDelegate::rotateImage);
+    // Image rotation functionality removed
 
     connect(view->deleteAction, &QAction::triggered, this, &MediaViewerDelegate::deleteImage);
 
@@ -108,26 +108,29 @@ void MediaViewerDelegate::initConnections() {
             this,
             &MediaViewerDelegate::onFileInfoClicked);
 
-    connect(view->zoomInButton, &ElaIconButton::clicked, [this]() {
-        scaleTo(getScale() + 10);
-        view->zoomSlider->setValue(getScale());
-    });
+    // Zoom functionality removed
+    // connect(view->zoomInButton, &ElaIconButton::clicked, [this]() {
+    //     scaleTo(getScale() + 10);
+    //     view->zoomSlider->setValue(getScale());
+    // });
 
-    connect(view->zoomSlider, &ElaSlider::valueChanged, [this](int value) { scaleTo(value); });
+    // connect(view->zoomSlider, &ElaSlider::valueChanged, [this](int value) { scaleTo(value); }); // Zoom removed
 
-    connect(view->zoomOutButton, &ElaIconButton::clicked, [this]() {
-        scaleTo(view->imageViewer->getScale() - 10);
-        view->zoomSlider->setValue(getScale());
-    });
+    // Zoom functionality removed
+    // connect(view->zoomOutButton, &ElaIconButton::clicked, [this]() {
+    //     scaleTo(view->imageViewer->getScale() - 10);
+    //     view->zoomSlider->setValue(getScale());
+    // });
 
     connect(view->maximizeButton, &ElaIconButton::clicked, [this]() {
         this->view->showMaximized();
     });
 
-    connect(view->zoom2originalButton, &ElaIconButton::clicked, [this]() {
-        scaleTo(100);
-        view->zoomSlider->setValue(getScale());
-    });
+    // Zoom functionality removed
+    // connect(view->zoom2originalButton, &ElaIconButton::clicked, [this]() {
+    //     scaleTo(100);
+    //     view->zoomSlider->setValue(getScale());
+    // });
 
     connect(this, &MediaViewerDelegate::scaledByWheel, [this]() {
         view->zoomSlider->setValue(getScale());
@@ -168,7 +171,7 @@ void MediaViewerDelegate::onImageChanged(bool fadeAnimation) {
 void MediaViewerDelegate::onWheelScrolled(int delta) {
     if (settings.value("wheelBehavior").toInt() == 0) {
         const double scaleFactor = std::abs(delta) / 100.0;
-        scaleTo(view->imageViewer->getScale() + delta / 10);
+        // scaleTo(view->imageViewer->getScale() + delta / 10); // Zoom removed
         emit scaledByWheel();
     } else {
         if (delta > 0) {
@@ -347,12 +350,7 @@ void MediaViewerDelegate::nextImage() {
     loadImage(filepath);
 }
 
-void MediaViewerDelegate::rotateImage() {
-    QTransform transform;
-    transform.rotate(90);
-    loadImage(image.transformed(transform), false);
-    auto _ [[maybe_unused]] = QtConcurrent::run([this]() { this->image.save(filepath); });
-}
+// Image rotation function removed to eliminate image editing functionality
 
 bool MediaViewerDelegate::loadImage(const QString& path, bool fadeAnimation) {
     if (path.isEmpty()) {
@@ -388,9 +386,7 @@ bool MediaViewerDelegate::loadImage(const QImage& image, bool fadeAnimation) {
     return false;
 }
 
-void MediaViewerDelegate::scaleTo(int percent) {
-    view->imageViewer->scaleTo(percent);
-}
+// Image scaling function removed to eliminate image editing functionality
 
 int MediaViewerDelegate::getScale() const {
     return view->imageViewer->getScale();

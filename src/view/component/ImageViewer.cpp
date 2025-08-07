@@ -30,23 +30,9 @@ ImageViewer::ImageViewer(const QPixmap& pixmap, QWidget* parent)
 }
 
 void ImageViewer::setContent(const QPixmap& pixmap, bool fadeAnimation) {
-    if (pixmapItem->pixmap().isNull() || !fadeAnimation) {
-        pixmapItem->setPixmap(pixmap);
-        adjustImageToFit();
-        return;
-    }
-
-    QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(this);
-    pixmapItem->setGraphicsEffect(opacityEffect);
-
-    QPropertyAnimation* animation = new QPropertyAnimation(opacityEffect, "opacity");
-    animation->setDuration(250);
-    animation->setStartValue(0.0);
-    animation->setEndValue(1.0);
-
+    // Fade animation removed to eliminate image editing functionality
     pixmapItem->setPixmap(pixmap);
     adjustImageToFit();
-    animation->start(QPropertyAnimation::DeleteWhenStopped);
     cntScale = 100;
 }
 
@@ -81,16 +67,7 @@ void ImageViewer::setMaxScale(int scale) {
     maxScale = scale;
 }
 
-void ImageViewer::scaleTo(int scale) {
-    if (scale < minScale) {
-        scale = minScale;
-    } else if (scale > maxScale) {
-        scale = maxScale;
-    }
-    const double scaleFactor = static_cast<double>(scale) / cntScale;
-    this->scale(scaleFactor, scaleFactor);
-    cntScale = scale;
-}
+// Image scaling function removed to eliminate image editing functionality
 
 void ImageViewer::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
@@ -125,7 +102,7 @@ void ImageViewer::resizeEvent(QResizeEvent* event) {
     adjustImageToFit();
     centerOn(viewCenter);
     cntScale = 100;
-    scaleTo(cntScalePercent);
+    // scaleTo(cntScalePercent); // Image scaling removed
 }
 
 void ImageViewer::wheelEvent(QWheelEvent* event) {

@@ -18,7 +18,7 @@ public:
     [[nodiscard]] int getMaxScale() const;
     void setMinScale(int scale);
     void setMaxScale(int scale);
-    void scaleTo(int scale);
+    // void scaleTo(int scale); // Image scaling function removed
 
 signals:
     void wheelScrolled(int delta);

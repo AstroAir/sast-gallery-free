@@ -18,14 +18,4 @@ QString Tools::fileSizeString(QString filepath) {
     return QString("%1 %2").arg(QString::number(size), unit[index]);
 }
 
-int Tools::imageBitDepth(const QImage& image) {
-    if (image.isNull()) {
-        return 0;
-    }
-    int bitDepth = image.depth();
-    if (bitDepth == 32 && !image.hasAlphaChannel()) {
-        bitDepth = 24;
-    }
-    // 16-bit and 8-bit may not work well
-    return bitDepth;
-}
+// Image bit depth analysis function removed to eliminate image editing functionality
